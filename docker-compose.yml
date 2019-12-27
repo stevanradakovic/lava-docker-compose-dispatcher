@@ -1,11 +1,12 @@
 version: '3.4'
 
 services:
+
   dispatcher:
     #image: lavasoftware/amd64-lava-dispatcher:2019.01
     # Use modified container with SNMP added
     build:
-      context: ./dispatcher-docker
+      context: ./dispatcher
       args:
         version: 2019.12
         server: 172.17.0.1
@@ -38,7 +39,7 @@ services:
       context: ./httpd
     container_name: worker_httpd
     ports:
-      - 80:80
+      - 80
     volumes:
       - worker-http:/var/lib/lava/dispatcher/tmp
 
@@ -47,7 +48,7 @@ services:
       context: ./tftpd
     container_name: worker_tftpd
     ports:
-        - 69:69/udp
+        - 69/udp
     volumes:
       - worker-tftp:/srv/tftp
 
@@ -59,11 +60,11 @@ services:
       - ./ser2net/ser2net.conf:/etc/ser2net.conf
       - '/dev/serial:/dev/serial' # required for serial adapters
       - '/dev:/dev'
-    devices:
-      - /dev/serial/by-id/usb-FTDI_TTL232R-3V3_FT914B60-if00-port0
-      - /dev/serial/by-id/usb-FTDI_FT232R_USB_UART_AL03HJDR-if00-port0
-      - /dev/serial/by-id/usb-FTDI_TTL232R-3V3_FT9PB4QT-if00-port0
-      - /dev/serial/by-id/usb-FTDI_FT232R_USB_UART_A907DVD3-if00-port0
+#    devices:
+#      - /dev/serial/by-id/usb-FTDI_TTL232R-3V3_FT914B60-if00-port0
+#      - /dev/serial/by-id/usb-FTDI_FT232R_USB_UART_AL03HJDR-if00-port0
+#      - /dev/serial/by-id/usb-FTDI_TTL232R-3V3_FT9PB4QT-if00-port0
+#      - /dev/serial/by-id/usb-FTDI_FT232R_USB_UART_A907DVD3-if00-port0
 
 #  worker-nfs:
 #    build:
@@ -78,6 +79,7 @@ services:
 
 
 volumes:
+
   # lava-server job artifact volume
   joboutput:
     name: lava-server-job-output
