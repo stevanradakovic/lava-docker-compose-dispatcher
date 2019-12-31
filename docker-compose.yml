@@ -3,17 +3,14 @@ version: '3.4'
 services:
 
   dispatcher:
-    #image: lavasoftware/amd64-lava-dispatcher:2019.01
-    # Use modified container with SNMP added
     build:
       context: ./dispatcher
       args:
         version: 2019.12
-        server: 172.17.0.1
-        extra_packages: "linux-image-amd64"
+        extra_packages: "linux-image-amd64 curl"
 
     #restart: always
-    container_name: lava_worker0
+    container_name: worker_docker0
     hostname: worker0
     devices:
       - /dev/kvm # needed for QEMU
@@ -21,9 +18,10 @@ services:
     cap_add:
       - NET_ADMIN # needed for QEMU
     environment:
-      - "DISPATCHER_HOSTNAME=--hostname=dispatcher"
-      - "LOGGER_URL=tcp://server:5555" # url to send logs
-      - "MASTER_URL=tcp://server:5556" # url of lava master
+      - "DISPATCHER_HOSTNAME=--hostname=worker_docker0"
+      #- "ENCRYPT=--encrypt"
+      - "LOGGER_URL=tcp://172.18.0.1:5555" # url to send logs
+      - "MASTER_URL=tcp://172.18.0.1:5556" # url of lava master
     volumes:
       - '/boot:/boot:ro'
       - '/lib/modules:/lib/modules:ro'

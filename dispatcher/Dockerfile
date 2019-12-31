@@ -13,6 +13,9 @@ RUN download-mibs
 RUN mkdir -p /usr/share/snmp/mibs/
 ADD powernet428.mib /usr/share/snmp/mibs/
 
+# Add certificates.
+COPY certs/* /etc/lava-dispatcher/certificates.d/
+
 # Add lab scripts
 RUN mkdir -p /usr/local/lab-scripts/
 ADD https://git.linaro.org/lava/lava-lab.git/plain/shared/lab-scripts/snmp_pdu_control /usr/local/lab-scripts/
@@ -20,9 +23,12 @@ RUN chmod a+x /usr/local/lab-scripts/snmp_pdu_control
 ADD https://git.linaro.org/lava/lava-lab.git/plain/shared/lab-scripts/eth008_control /usr/local/lab-scripts/
 RUN chmod a+x /usr/local/lab-scripts/eth008_control
 
-ARG server=172.17.0.1
-RUN echo "MASTER_URL=\"tcp://${server}:5556\"" >> /etc/lava-dispatcher/lava-slave
-RUN echo "LOGGER_URL=\"tcp://${server}:5555\"" >> /etc/lava-dispatcher/lava-slave
+#ARG master_url
+#ARG logger_url
+#ARG encrypt=""
+#RUN echo "MASTER_URL=\"${master_url}\"" >> /etc/lava-dispatcher/lava-slave
+#RUN echo "LOGGER_URL=\"${logger_url}\"" >> /etc/lava-dispatcher/lava-slave
+#RUN echo "ENCRYPT=\"${encrypt}\"" >> /etc/lava-dispatcher/lava-slave
 
 #ENV LIBGUESTFS_BACKEND=direct
 
