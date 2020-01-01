@@ -18,10 +18,10 @@ services:
     cap_add:
       - NET_ADMIN # needed for QEMU
     environment:
-      - "DISPATCHER_HOSTNAME=--hostname=worker_docker0"
-      #- "ENCRYPT=--encrypt"
-      - "LOGGER_URL=tcp://172.18.0.1:5555" # url to send logs
-      - "MASTER_URL=tcp://172.18.0.1:5556" # url of lava master
+      - "DISPATCHER_HOSTNAME=--hostname=${DOCKER_WORKER_HOSTNAME}"
+      - "ENCRYPT=${LAVA_SERVER_ENCRYPT}"
+      - "LOGGER_URL=tcp://${LAVA_SERVER_HOSTNAME}:5555" # url to send logs
+      - "MASTER_URL=tcp://${LAVA_SERVER_HOSTNAME}:5556" # url of lava master
     volumes:
       - '/boot:/boot:ro'
       - '/lib/modules:/lib/modules:ro'
