@@ -23,7 +23,7 @@ services:
       - "MASTER_URL=tcp://${LAVA_SERVER_HOSTNAME}:5556" # url of lava master
       - "ENCRYPT=${LAVA_SERVER_ENCRYPT}"
       - "MASTER_CERT=${MASTER_CERT}"
-      - "SLAVES_CERTS=${SLAVES_CERTS}"
+      - "SLAVES_CERT=${SLAVES_CERT}"
     volumes:
       - '/boot:/boot:ro'
       - '/lib/modules:/lib/modules:ro'
