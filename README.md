@@ -18,7 +18,7 @@ others are optional.
   LAVA master instance.
 - (optional) set encryption to `--encrypt` if the master instance is using
   encryption for master-slave communication.
-- (optional) (Create certificates)[https://validation.linaro.org/static/docs/v2/pipeline-server.html#create-certificates] on the slave.
+- (optional) [Create certificates](https://validation.linaro.org/static/docs/v2/pipeline-server.html#create-certificates) on the slave.
   `sudo /usr/share/lava-dispatcher/create_certificate.py foo_slave_1`
   This can be done in two ways:
   - by running "docker-compose run dispatcher bash".
@@ -42,7 +42,7 @@ others are optional.
 - (optional) If the lab where this container runs in has a proxy or you require
   any specific worker environment settings, you will need to update the proxy
   settings by setting the [worker environment](https://validation.linaro.org/static/docs/v2/proxy.html#using-the-http-proxy)
-  You can do this via this (XMLRPC API call)[https://validation.linaro.org/api/help/#scheduler.workers.set_env].
+  You can do this via this [XMLRPC API call](https://validation.linaro.org/api/help/#scheduler.workers.set_env).
 
 ## Usage
 
