@@ -22,6 +22,7 @@ services:
       - "LOGGER_URL=tcp://${LAVA_SERVER_HOSTNAME}:5555" # url to send logs
       - "MASTER_URL=tcp://${LAVA_SERVER_HOSTNAME}:5556" # url of lava master
       - "ENCRYPT=${LAVA_SERVER_ENCRYPT}"
+      - "SOCKS_PROXY=${SOCKS_PROXY}"
       - "MASTER_CERT=${MASTER_CERT}"
       - "SLAVES_CERT=${SLAVES_CERT}"
     volumes:
