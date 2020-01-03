@@ -39,10 +39,15 @@ others are optional.
   {% set mac_addr = 'DF:AD:BE:EF:33:02' %}
   {% set memory = 1024 %}
   ```
-- (optional) If the lab where this container runs in has a proxy or you require
-  any specific worker environment settings, you will need to update the proxy
-  settings by setting the [worker environment](https://validation.linaro.org/static/docs/v2/proxy.html#using-the-http-proxy)
+- (optional) If the lab where this container runs is behind a proxy or you
+  require any specific worker environment settings, you will need to update the
+  proxy settings by setting the [worker environment](https://validation.linaro.org/static/docs/v2/proxy.html#using-the-http-proxy)
   You can do this via this [XMLRPC API call](https://validation.linaro.org/api/help/#scheduler.workers.set_env).
+  In case the worker sits behind a proxy, you will also need to set
+  `SOCKS_PROXY=--socks-proxy <address>:port` in the .env configuration file
+
+`Note: If the master instance is behind a firewall, you will need to create a
+port forwarding so that ports 5555 and 5556 are open to the public.`
 
 ## Usage
 
