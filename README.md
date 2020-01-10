@@ -52,14 +52,14 @@ port forwarding so that ports 5555 and 5556 are open to the public.`
 ## Usage
 
 `make`: Services are built and then tagged. Following images are added to the
-        system:
-        - debian
-        - httpd
-        - lavasoftware/lava-dispatcher
-        - lava-docker-compose-dispatcher_ser2net
-        - lava-docker-compose-dispatcher_worker-tftpd
-        - lava-docker-compose-dispatcher_worker-webserver
-        - lava-docker-compose-dispatcher_dispatcher
+system:
+- debian
+- httpd
+- lavasoftware/lava-dispatcher
+- lava-docker-compose-dispatcher_ser2net
+- lava-docker-compose-dispatcher_worker-tftpd
+- lava-docker-compose-dispatcher_worker-webserver
+- lava-docker-compose-dispatcher_dispatcher
 
 `make run`: Run the following containers
  - ser2net

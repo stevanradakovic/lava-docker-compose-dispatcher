@@ -3,7 +3,7 @@ FROM lavasoftware/lava-dispatcher:${version}
 
 ARG extra_packages=""
 RUN apt -q update || apt -q update
-RUN DEBIAN_FRONTEND=noninteractive apt-get -q -y install software-properties-common
+RUN DEBIAN_FRONTEND=noninteractive apt-get -q -y install software-properties-common nfs-common
 RUN apt-add-repository non-free
 RUN apt -q update || apt -q update
 RUN DEBIAN_FRONTEND=noninteractive apt-get -q -y install ${extra_packages} net-tools snmp snmp-mibs-downloader
@@ -31,5 +31,7 @@ RUN chmod a+x /usr/local/lab-scripts/eth008_control
 #RUN echo "ENCRYPT=\"${encrypt}\"" >> /etc/lava-dispatcher/lava-slave
 
 #ENV LIBGUESTFS_BACKEND=direct
+
+EXPOSE 2049
 
 ENTRYPOINT ["/root/entrypoint.sh"]

@@ -31,9 +31,12 @@ services:
       - '/dev/bus:/dev/bus:ro' # required for USB devices
       - '/dev/serial:/dev/serial:ro' # required for serial adapters
       - '/dev/disk:/dev/disk:ro' # required for SDMux
-      - /var/lib/lava/dispatcher/tmp:/var/lib/lava/dispatcher/tmp
       - worker-http:/var/lib/lava/dispatcher/tmp
       - worker-tftp:/srv/tftp
+    ports:
+      - 111
+      - 2049
+
 
   worker-webserver:
     build:
@@ -67,26 +70,23 @@ services:
 #      - /dev/serial/by-id/usb-FTDI_TTL232R-3V3_FT9PB4QT-if00-port0
 #      - /dev/serial/by-id/usb-FTDI_FT232R_USB_UART_A907DVD3-if00-port0
 
-#  worker-nfs:
-#    build:
-#      context: ./nfs
-#    container_name: worker_nfs
-#    ports:
-#      - 111:111/udp
-#      - 2049:2049
-#    volumes:
-#      - worker-http:/var/lib/lava/dispatcher/tmp
-
+  worker-nfs:
+    build:
+      context: ./nfs
+    container_name: worker_nfs
+#    privileged: true
+    volumes:
+      - ./nfs/ganesha.conf:/etc/ganesha/ganesha.conf
+      - worker-http:/var/lib/lava/dispatcher/tmp
+    ports:
+      - 111
+      - 2049
 
 
 volumes:
-
+  worker-http:
+  worker-tftp:
   # lava-server job artifact volume
   joboutput:
     name: lava-server-job-output
 
-  worker-http:
-    name: worker-http
-
-  worker-tftp:
-    name: worker-tftp
