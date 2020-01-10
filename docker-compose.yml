@@ -33,10 +33,6 @@ services:
       - '/dev/disk:/dev/disk:ro' # required for SDMux
       - worker-http:/var/lib/lava/dispatcher/tmp
       - worker-tftp:/srv/tftp
-    ports:
-      - 111
-      - 2049
-
 
   worker-webserver:
     build:
