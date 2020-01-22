@@ -8,8 +8,6 @@ services:
       args:
         version: 2019.12
         extra_packages: "linux-image-amd64 curl"
-
-    #restart: always
     container_name: worker_docker0
     hostname: worker0
     devices:
@@ -31,6 +29,8 @@ services:
       - '/dev/bus:/dev/bus:ro' # required for USB devices
       - '/dev/serial:/dev/serial:ro' # required for serial adapters
       - '/dev/disk:/dev/disk:ro' # required for SDMux
+      - ./dispatcher/power-control/:/root/power-control
+      - ./dispatcher/ssh/:/root/.ssh/
       - worker-http:/var/lib/lava/dispatcher/tmp
       - worker-tftp:/srv/tftp
 
@@ -48,7 +48,7 @@ services:
       context: ./tftpd
     container_name: worker_tftpd
     ports:
-        - 69/udp
+        - 69:69/udp
     volumes:
       - worker-tftp:/srv/tftp
 
@@ -56,24 +56,30 @@ services:
     build:
       context: ./ser2net
     container_name: worker_ser2net
-    #privileged: true
+    privileged: true
     volumes:
       - ./ser2net/ser2net.conf:/etc/ser2net.conf
       - '/dev/serial:/dev/serial' # required for serial adapters
       - '/dev:/dev'
     devices: []
+    ports:
+      - 7101:7101
 
   worker-nfs:
     build:
       context: ./nfs
+    privileged: true
     container_name: worker_nfs
     volumes:
       - ./nfs/ganesha.conf:/etc/ganesha/ganesha.conf
+      - ./nfs/services:/etc/services
       - worker-http:/var/lib/lava/dispatcher/tmp
     ports:
-      - 111
-      - 2049
-
+      - 111:111
+      - 111:111/udp
+      - 2049:2049
+      - 2049:2049/udp
+      - 35543:35543
 
 volumes:
   worker-http:
@@ -81,4 +87,3 @@ volumes:
   # lava-server job artifact volume
   joboutput:
     name: lava-server-job-output
-
